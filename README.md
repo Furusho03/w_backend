@@ -17,4 +17,6 @@
 
 6 うまくサーバーが立ち上がったらもう一つターミナルを開いて client フォルダーに移動してください
 
-7 そして npm install を行い　npm start
+7 client の package.json の proxy を http://localhost:バックエンドのポート に書き換えてください
+
+8 そして npm install を行い　npm start
