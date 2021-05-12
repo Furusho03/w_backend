@@ -8,7 +8,7 @@ const signin = async (req, res, next) => {
       email: req.body.email,
     });
 
-    let { id, username, profileImageUrl } = user;
+    let { id, username, age } = user;
 
     let isMatch = await user.comparePassword(req.body.password);
     
@@ -17,14 +17,14 @@ const signin = async (req, res, next) => {
         {
           id,
           username,
-          profileImageUrl,
+          age,
         },
         process.env.JWT_SECRET_KEY
       );
       return res.status(200).json({
         id,
         username,
-        profileImageUrl,
+        age,
         token,
       });
     } else {
@@ -33,8 +33,6 @@ const signin = async (req, res, next) => {
         message: "メールアドレスまたわパスワードが一致しません",
       });
     }
-    // checking if their password matches what was sent to the server
-    // if it all matches log them in
   } catch (error) {
     return next({
       status: 400,
@@ -46,19 +44,19 @@ const signin = async (req, res, next) => {
 const signup = async (req, res, next) => {
   try {
     let user = await User.create(req.body);
-    let { id, username, profileImageUrl } = user;
+    let { id, username, age } = user;
     let token = jwt.sign(
       {
         id,
         username,
-        profileImageUrl,
+        age,
       },
       process.env.JWT_SECRET_KEY
     );
     return res.status(200).json({
       id,
       username,
-      profileImageUrl,
+      age,
       token,
     });
     // ユーザー作成

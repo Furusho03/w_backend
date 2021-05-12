@@ -1,12 +1,21 @@
 import jwt from "jsonwebtoken";
 
-// make sure the user is logged - Authentication
+// ユーザーがログインしていることを確認する - Authentication
 const loginRequired = (req, res, next) => {
   try {
-    //Bearer ....
+    // Bearer ....
+    if (req.headers.authorization === undefined) {
+      return next({
+        status: 401,
+        message: "ログインしてください",
+      });
+    }
+
     const token = req.headers.authorization.split(" ")[1];
+
     jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, decoded) {
       if (decoded) {
+        req.user = decoded
         return next();
       } else {
         return next({
@@ -24,22 +33,35 @@ const loginRequired = (req, res, next) => {
   }
 };
 
-// make sure we get the correct user - Authentication
+// 正しいユーザーであることを確認する - Authentication
 const ensureCorrectUser = (req, res, next) => {
   try {
+    if (req.headers.authorization === undefined) {
+      return next({
+        status: 401,
+        message: "ログインできませんでした s",
+      });
+    }
+
     const token = req.headers.authorization.split(" ")[1];
+
     jwt.verify(token, process.env.JWT_SECRET_KEY, function (err, decoded) {
       if (decoded && decoded.id === req.params.id) {
+        req.user = decoded
         return next();
       } else {
         return next({
           status: 401,
-          message: "ログインできませんでした",
+          message: "ログインできませんでした c",
         });
       }
     });
   } catch (error) {
     console.error(error)
+    return next({
+      status: 401,
+      message: "ログインできませんでした c",
+    });
   }
 };
 

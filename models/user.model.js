@@ -17,13 +17,28 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    profileImageUrl: {
-      type: String,
+    age: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 100
     },
-    messages: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Message'
-    }]
+    follow: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      },
+    ],
+    followers: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

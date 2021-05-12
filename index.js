@@ -3,44 +3,29 @@ const app = express();
 import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
+import morgan from "morgan";
+// db
 import connectDB from "./models/index.js";
 // ハンドラー
 import errorHandler from "./handlers/error.handler.js";
 // ルート
 import auth from "./routes/auth.route.js";
-import message from "./routes/message.route.js";
-// middleware
-import {
-  loginRequired,
-  ensureCorrectUser,
-} from "./middleware/auth.middleware.js";
-// models
-import Message from './models/message.model.js'
+import user from "./routes/user.route.js";
+import profile from "./routes/profile.router.js";
+import posts from "./routes/posts.router.js";
+import books from "./routes/book.router.js";
 
 connectDB();
 
 app.use(cors());
 app.use(express.json());
-
-app.get("/api/v1/messages", loginRequired, async (req, res, next) => {
-  try {
-    let message = await Message.find().sort({ createdAt: 'desc'}).populate('user', {
-      username: true,
-      profileImageUrl: true
-    })
-    return res.status(200).json(message)
-  } catch (error) {
-    return next(error)
-  }
-});
+app.use(morgan("dev"));
 
 app.use("/api/v1/auth", auth);
-app.use(
-  "/api/v1/users/:id/messages",
-  loginRequired,
-  ensureCorrectUser,
-  message
-);
+app.use("/api/v1/users", user);
+app.use("/api/v1/profile", profile);
+app.use("/api/v1/posts", posts);
+app.use("/api/v1/books", books);
 
 app.use((req, res, next) => {
   let err = new Error("Not found");
