@@ -9,6 +9,8 @@
 
 　JWT_SECRET_KEY="シークレットキーを入れてください　どんな文字でもいいです"
 
+2.5 次にターミナルで node seed/seeder.js -d を行って一旦データベース内をクリーンアップします
+
 3 次にターミナルで　node seed/seeder.js を行ってください　
 
 4 つぎに npm start でサーバーを起動してください

@@ -2,7 +2,7 @@ const books = [
   {
     title: "ここにタイトルが入ります",
     text: "ここにテキストが入ります",
-    image: "/images/test1.jpg",
+    image: "/images/showcase.jpg",
   },
   {
     title: "Book 2",
