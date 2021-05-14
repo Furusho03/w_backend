@@ -8,9 +8,14 @@ import {
   ensureCorrectUser,
 } from "../middleware/auth.middleware.js";
 /* controller */
-import { getProfile } from "../controllers/profile.controller.js";
+import { getProfile, changeProfile, changePassword } from "../controllers/profile.controller.js";
 
-/* /api/v1/profile/:id*/
-router.get("/:id", loginRequired, getProfile);
+/* GET - /api/v1/profile/:id*/
+router.get("/:id", loginRequired, ensureCorrectUser, getProfile);
+
+/* post - /api/v1/profile/:id/change*/
+router.put("/:id/update", loginRequired, ensureCorrectUser, changeProfile);
+
+router.put("/:id/changep", loginRequired, ensureCorrectUser, changePassword);
 
 export default router;

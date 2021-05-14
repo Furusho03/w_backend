@@ -39,7 +39,7 @@ const ensureCorrectUser = (req, res, next) => {
     if (req.headers.authorization === undefined) {
       return next({
         status: 401,
-        message: "ログインできませんでした s",
+        message: "ユーザーが正しくありません",
       });
     }
 
@@ -52,7 +52,7 @@ const ensureCorrectUser = (req, res, next) => {
       } else {
         return next({
           status: 401,
-          message: "ログインできませんでした c",
+          message: "ユーザーが正しくありません",
         });
       }
     });

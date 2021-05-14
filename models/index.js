@@ -7,7 +7,9 @@ const connectDB = async () => {
       keepAlive: true,
       useNewUrlParser: true ,
       useUnifiedTopology: true,
-      useCreateIndex:  true
+      useCreateIndex:  true,
+      useFindAndModify: false
+      
     });
     console.log(`Mongodbに接続しました　ホストネーム${conn.connection.host}`)
   }catch(error) {

@@ -11,7 +11,7 @@ const signin = async (req, res, next) => {
     let { id, username, age } = user;
 
     let isMatch = await user.comparePassword(req.body.password);
-    
+
     if (isMatch) {
       let token = jwt.sign(
         {
@@ -30,13 +30,13 @@ const signin = async (req, res, next) => {
     } else {
       return next({
         status: 400,
-        message: "メールアドレスまたわパスワードが一致しません",
+        message: "メールアドレスまたわパスワードが一致しません 1",
       });
     }
   } catch (error) {
     return next({
       status: 400,
-      message: "メールアドレスまたわパスワードが一致しません",
+      message: "メールアドレスまたわパスワードが一致しません 2",
     });
   }
 };
