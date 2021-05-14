@@ -25,6 +25,7 @@ const PostSchema = new Schema(
       type: Number,
       min: -10,
       max: 10,
+      default: 0,
     },
     state: {
       type: String,
