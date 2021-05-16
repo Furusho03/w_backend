@@ -1,7 +1,13 @@
 import express from "express";
 const router = express.Router();
 import { check } from "express-validator";
-import { createPost, getAllPost, getPostType, getPost } from "../controllers/posts.controller.js";
+import {
+  createPost,
+  getAllPost,
+  getPostType,
+  getPost,
+  getMyPost
+} from "../controllers/posts.controller.js";
 // middleware
 import {
   loginRequired,
@@ -23,13 +29,15 @@ router.post(
 );
 
 /* GET - /api/v1/posts/ - 全ての投稿 */
-router.get('/', getAllPost)
+router.get("/", getAllPost);
 
 /* GET - /api/v1/posts/:id/lists - 種類ごとの投稿*/
-router.get('/:id/lists', getPostType)
+router.get("/:id/lists", getPostType);
 
 /* GET - /api/v1/posts/:id/list - 一つのの投稿*/
-router.get('/:id/list', getPost)
+router.get("/:id/list", getPost);
 
+/* GET - /api/v1/posts/:id/list - 自分の投稿*/
+router.get("/:id/my-posts", loginRequired, ensureCorrectUser, getMyPost);
 
 export default router;

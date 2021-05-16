@@ -41,6 +41,10 @@ const getAllPost = async (req, res) => {
         select: { title: true, image: true, text: true },
       });
 
+    if (posts.length === 0) {
+      return res.status(200).json({ message: "投稿はありません" });
+    }
+
     res.status(200).json({ posts });
   } catch (error) {
     console.error(error.message);
@@ -85,4 +89,27 @@ const getPost = async (req, res) => {
   }
 };
 
-export { createPost, getAllPost, getPostType, getPost };
+const getMyPost = async (req, res) => {
+  try {
+    const posts = await Post.find({ user: req.params.id })
+      .populate({
+        path: "user",
+        select: "username",
+      })
+      .populate({
+        path: "book",
+        select: { title: true, image: true, text: true },
+      });
+
+    if (posts.length === 0) {
+      return res.status(200).json({ message: "投稿はありません" });
+    }
+
+    res.status(200).json({ posts });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "server error" });
+  }
+};
+
+export { createPost, getAllPost, getPostType, getPost, getMyPost };
