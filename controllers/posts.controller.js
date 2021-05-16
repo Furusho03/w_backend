@@ -50,7 +50,7 @@ const getAllPost = async (req, res) => {
 
 const getPostType = async (req, res) => {
   try {
-    const postType = await Post.find({ book: req.params.id })
+    const postsType = await Post.find({ book: req.params.id })
       .sort({ createdAt: "desc" })
       .populate({
         path: "user",
@@ -60,7 +60,7 @@ const getPostType = async (req, res) => {
         path: "book",
         select: { title: true, image: true, text: true },
       });
-    res.status(200).json({ postType });
+    res.status(200).json({ postsType });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "server error" });
