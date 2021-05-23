@@ -92,6 +92,7 @@ const getPost = async (req, res) => {
 const getMyPost = async (req, res) => {
   try {
     const posts = await Post.find({ user: req.params.id })
+      .sort({ createdAt: "desc" })
       .populate({
         path: "user",
         select: "username",
